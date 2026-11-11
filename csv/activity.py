@@ -1,5 +1,6 @@
 from datetime import date
 from flask import Flask, request, abort
+
 from werkzeug.security import generate_password_hash
 
 app = Flask(__name__)
