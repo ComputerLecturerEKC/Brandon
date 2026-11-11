@@ -1,0 +1,32 @@
+
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Local Produce Available</h1>
+
+{% for product in products %}
+<article class="fade-in" aria-label="Product card">
+
+    <img
+        src="{{ url_for('static', filename='placeholder.jpg') }}"
+        alt="Image of {{ product.name }}"
+    >
+<img src="{{ url_for('static', filename='icons/farmer.svg') }}" alt="">
+    <h2>{{ product.name }}</h2>
+    <p>{{ product.description }}</p>
+    <p><strong>£{{ product.price }}</strong></p>
+    <p>Stock available: {{ product.stock }}</p>
+
+    {% if current_user.is_authenticated %}
+    <form action="{{ url_for('main_routes.order_product', product_id=product.id) }}" method="POST">
+        <label for="qty_{{ product.id }}">Quantity</label>
+        <input type="number" id="qty_{{ product.id }}" name="quantity" min="1" max="{{ product.stock }}">
+        <button type="submit">Add to Order</button>
+    </form>
+    {% else %}
+    <p><em>Login to place an order.</em></p>
+    {% endif %}
+</article>
+{% endfor %}
+<a href="/login">Login</a> | <a href="/register">Register</a>
+{% endblock %}

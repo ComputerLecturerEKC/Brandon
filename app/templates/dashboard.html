@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Your Producer Dashboard</h1>
+
+<h2>Your Products</h2>
+
+<table>
+<thead>
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Update Stock</th>
+    </tr>
+</thead>
+
+<tbody>
+{% for p in products %}
+<tr>
+    <td>{{ p.name }}</td>
+    <td>£{{ p.price }}</td>
+    <td>{{ p.stock }}</td>
+
+    <td>
+        <form action="{{ url_for('main_routes.update_stock', product_id=p.id) }}" method="POST">
+            <input type="number" name="stock" min="0">
+            <input type="submit" value="Update">
+        </form>
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+
+</table>
+
+{% endblock %}
